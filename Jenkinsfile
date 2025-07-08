@@ -17,11 +17,12 @@ pipeline {
             }
         }
         stage('Run Tests') {
-            steps {
-                echo 'Running Automated Tests...'
-                sh 'npm test'  // Fails pipeline if tests fail
-            }
-        }
+    steps {
+        echo 'Running Automated Tests...'
+        sh 'npx jest'   // ✅ This will work even without a global install
+    }
+}
+
         stage('Build Application') {
             steps {
                 echo 'Building Application...'
