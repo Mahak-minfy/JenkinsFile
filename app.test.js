@@ -1,6 +1,6 @@
 // tests/app.test.js
 
-const { add, multiply } = require('../src/app.js');  // Import functions from app.js
+const { add, multiply } = require('./app.js');  // Import functions from app.js
 
 describe('Math functions', () => {
     test('adds two numbers correctly', () => {
