@@ -1,39 +1,39 @@
 pipeline {
     agent any
+
     tools {
-        nodejs 'NodeJS_18'
+        nodejs 'NodeJS_18'  // Define in Jenkins → Global Tools → NodeJS
     }
+
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                echo 'Checking out code from this repository...'
                 checkout scm
             }
         }
+
         stage('Install Dependencies') {
             steps {
-                echo 'Installing npm dependencies...'
                 sh 'npm install'
             }
         }
-        stage('Run Tests') {
-    steps {
-        echo 'Running Automated Tests...'
-        sh 'npx jest'   // ✅ This will work even without a global install
-    }
-}
 
-        stage('Build Application') {
+        stage('Run Tests') {
             steps {
-                echo 'Building Application...'
-                sh 'npm run build'
+                sh 'npm test'  // Runs your test suite
             }
         }
-        stage('Run Application') {
+
+        stage('Publish Test Results') {
             steps {
-                echo 'Starting Application...'
-                sh 'nohup node app.js &'
+                junit '**/test-results.xml'  // If using Jest JUnit reporter
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up...'
         }
     }
 }
