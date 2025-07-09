@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS_18'  // Define in Jenkins → Global Tools → NodeJS
+        nodejs 'NodeJS_18'
     }
 
     stages {
@@ -18,15 +18,21 @@ pipeline {
             }
         }
 
+        stage('Fix Jest Permissions') {
+            steps {
+                sh 'chmod +x ./node_modules/.bin/jest'
+            }
+        }
+
         stage('Run Tests') {
             steps {
-                  sh 'npx jest --ci --reporters=default --reporters=jest-junit'
+                sh 'npx jest --ci --reporters=default --reporters=jest-junit'
             }
         }
 
         stage('Publish Test Results') {
             steps {
-                junit '**/test-results.xml'  // If using Jest JUnit reporter
+                junit '**/junit.xml'
             }
         }
     }
