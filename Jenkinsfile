@@ -20,7 +20,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'npm test'  // Runs your test suite
+                  sh 'npx jest --ci --reporters=default --reporters=jest-junit'
             }
         }
 
